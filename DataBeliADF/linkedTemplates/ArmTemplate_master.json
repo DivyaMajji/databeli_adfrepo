@@ -11,6 +11,18 @@
 			"type": "string",
 			"defaultValue": "https://databelistgaccount.dfs.core.windows.net/"
 		},
+		"LS_AzureSqlDatabase_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "detabeli-server.database.windows.net"
+		},
+		"LS_AzureSqlDatabase_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "databeli-db"
+		},
+		"LS_AzureSqlDatabase_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "divya"
+		},
 		"LS_postgresql_properties_typeProperties_server": {
 			"type": "string",
 			"defaultValue": "ep-bold-dawn-b37w3car-pooler.c-4.ap-southeast-1.aws.neon.tech"
@@ -59,6 +71,15 @@
 					},
 					"ls_AzureKeyVault_properties_typeProperties_baseUrl": {
 						"value": "[parameters('ls_AzureKeyVault_properties_typeProperties_baseUrl')]"
+					},
+					"LS_AzureSqlDatabase_properties_typeProperties_server": {
+						"value": "[parameters('LS_AzureSqlDatabase_properties_typeProperties_server')]"
+					},
+					"LS_AzureSqlDatabase_properties_typeProperties_database": {
+						"value": "[parameters('LS_AzureSqlDatabase_properties_typeProperties_database')]"
+					},
+					"LS_AzureSqlDatabase_properties_typeProperties_userName": {
+						"value": "[parameters('LS_AzureSqlDatabase_properties_typeProperties_userName')]"
 					},
 					"LS_postgresql_properties_typeProperties_server": {
 						"value": "[parameters('LS_postgresql_properties_typeProperties_server')]"
