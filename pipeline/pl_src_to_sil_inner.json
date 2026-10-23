@@ -1,14 +1,14 @@
 {
-	"name": "pipeline1",
+	"name": "pl_src_to_sil_inner",
 	"properties": {
 		"activities": [
 			{
-				"name": "Read source table list",
+				"name": "Read Source Table List",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
-					"retry": 0,
+					"retry": 2,
 					"retryIntervalInSeconds": 30,
 					"secureOutput": false,
 					"secureInput": false
@@ -17,18 +17,27 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "SELECT table_id FROM [ctrl].[table_config] \nwhere is_active = 1 and source_system = '@{pipeline().parameters.source_system}'",
+						"sqlReaderQuery": {
+							"value": "select * from ctrl.table_config where is_active = 1 and source_system = @{pipeline().parameters.source_system}",
+							"type": "Expression"
+						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
 					"dataset": {
-						"referenceName": "AzureSqlTable1",
+						"referenceName": "AzureSqlTable2",
 						"type": "DatasetReference"
 					},
 					"firstRowOnly": false
 				}
 			}
 		],
+		"parameters": {
+			"source_system": {
+				"type": "string",
+				"defaultValue": "neon_postgres"
+			}
+		},
 		"annotations": []
 	}
 }
