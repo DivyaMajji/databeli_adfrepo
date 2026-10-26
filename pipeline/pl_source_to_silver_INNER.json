@@ -76,15 +76,48 @@
 				"typeProperties": {
 					"source": {
 						"type": "PostgreSqlV2Source",
-						"query": "select * from PUBLIC.hospitals",
+						"query": {
+							"value": "select * from PUBLIC.@{activity('Read Table details').output.firstRow.source_table_name}",
+							"type": "Expression"
+						},
 						"queryTimeout": "02:00:00"
 					},
-					"enableStaging": false
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
 				},
 				"inputs": [
 					{
 						"referenceName": "ds_PostgreSql",
 						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_adls_parquet",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "landing",
+							"folder": {
+								"value": "@concat(activity('Read Table details').output.firstRow.source_system,'/',\nactivity('Read Table details').output.firstRow.source_tablename,\n'/',\nvariables('start_time')\n)",
+								"type": "Expression"
+							}
+						}
 					}
 				]
 			}
